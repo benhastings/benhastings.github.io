@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Monthly Budget Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-title {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .card-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .card-note {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .highlight-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .highlight-card .card-title {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .highlight-card .card-value {
+            color: white;
+        }
+        
+        .highlight-card .card-note {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #444;
+            margin: 25px 0 15px 0;
+            font-size: 1.3em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .amount {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .total-row {
+            background: #f8f9fa;
+            font-weight: 700;
+        }
+        
+        .total-row td {
+            padding: 15px;
+            font-size: 1.1em;
+        }
+        
+        .range {
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .notes {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .opportunity {
+            background: #fff4e6;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .opportunity h3 {
+            color: #ff9800;
+            margin-top: 0;
+        }
+        
+        .action-items {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .action-items h3 {
+            color: #4caf50;
+            margin-top: 0;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-size: 1.2em;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .card-value {
+                font-size: 1.5em;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>2025 Monthly Budget Analysis</h1>
+            <div class="subtitle">Based on January - August 2025 Actual Spending</div>
+        </header>
+        
+        <div class="summary-cards">
+            <div class="card highlight-card">
+                <div class="card-title">Total Monthly Budget</div>
+                <div class="card-value">$8,835</div>
+                <div class="card-note">Complete household needs</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Regular Monthly</div>
+                <div class="card-value">$7,075</div>
+                <div class="card-note">Recurring expenses</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Periodic Savings</div>
+                <div class="card-value">$1,760</div>
+                <div class="card-note">For quarterly/annual bills</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Largest Opportunity</div>
+                <div class="card-value">$1,440</div>
+                <div class="card-note">Shopping category</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <h2>1. Regular Monthly Expenses - $7,075</h2>
+            
+            <h3>Essential Living Expenses - $3,581/month</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Monthly Budget</th>
+                        <th>Actual Range</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Groceries</td>
+                        <td class="amount">$1,735</td>
+                        <td class="range">$1,013 - $2,711</td>
+                        <td class="notes">Every month</td>
+                    </tr>
+                    <tr>
+                        <td>Mortgage</td>
+                        <td class="amount">$825</td>
+                        <td class="range">$775 - $1,162</td>
+                        <td class="notes">Very stable</td>
+                    </tr>
+                    <tr>
+                        <td>Gas & Electric</td>
+                        <td class="amount">$330</td>
+                        <td class="range">$136 - $702</td>
+                        <td class="notes">7/8 months</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td class="amount">$230</td>
+                        <td class="range">$179 - $549</td>
+                        <td class="notes">Every month</td>
+                    </tr>
+                    <tr>
+                        <td>Gas</td>
+                        <td class="amount">$215</td>
+                        <td class="range">$142 - $318</td>
+                        <td class="notes">7/8 months</td>
+                    </tr>
+                    <tr>
+                        <td>Internet & Cable</td>
+                        <td class="amount">$100</td>
+                        <td class="range">$70 - $108</td>
+                        <td class="notes">Every month</td>
+                    </tr>
+                    <tr>
+                        <td>Auto Payment</td>
+                        <td class="amount">$146</td>
+                        <td class="range">$167 fixed</td>
+                        <td class="notes">6/8 months</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Subtotal Essential</strong></td>
+                        <td class="amount"><strong>$3,581</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Discretionary & Variable - $3,494/month</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Monthly Budget</th>
+                        <th>Actual Range</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shopping</td>
+                        <td class="amount">$1,440</td>
+                        <td class="range">$1,025 - $2,204</td>
+                        <td class="notes">Highest discretionary</td>
+                    </tr>
+                    <tr>
+                        <td>Education</td>
+                        <td class="amount">$450</td>
+                        <td class="range">$228 - $1,306</td>
+                        <td class="notes">7/8 months</td>
+                    </tr>
+                    <tr>
+                        <td>Restaurants & Bars</td>
+                        <td class="amount">$440</td>
+                        <td class="range">$244 - $709</td>
+                        <td class="notes">Every month</td>
+                    </tr>
+                    <tr>
+                        <td>Insurance</td>
+                        <td class="amount">$385</td>
+                        <td class="range">$108 - $949</td>
+                        <td class="notes">Every month</td>
+                    </tr>
+                    <tr>
+                        <td>Clothing</td>
+                        <td class="amount">$210</td>
+                        <td class="range">$96 - $560</td>
+                        <td class="notes">6/8 months</td>
+                    </tr>
+                    <tr>
+                        <td>Other Categories</td>
+                        <td class="amount">$569</td>
+                        <td class="range">Various</td>
+                        <td class="notes">Cake, home improvement, fitness, etc.</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Subtotal Discretionary</strong></td>
+                        <td class="amount"><strong>$3,494</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>2. Periodic Expenses - Save $1,760/month</h2>
+            
+            <h3>Quarterly Bills</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Annual Cost</th>
+                        <th>Save Monthly</th>
+                        <th>Payment Schedule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Water</td>
+                        <td>$450</td>
+                        <td class="amount">$38</td>
+                        <td class="notes">Feb, May, Aug*, Nov*</td>
+                    </tr>
+                    <tr>
+                        <td>Garbage</td>
+                        <td>$68</td>
+                        <td class="amount">$6</td>
+                        <td class="notes">Jan, Mar, Jun, Sep*</td>
+                    </tr>
+                    <tr>
+                        <td>Child Activities</td>
+                        <td>$437</td>
+                        <td class="amount">$36</td>
+                        <td class="notes">Varies quarterly</td>
+                    </tr>
+                    <tr>
+                        <td>Charity</td>
+                        <td>$354</td>
+                        <td class="amount">$30</td>
+                        <td class="notes">Jan-Apr pattern</td>
+                    </tr>
+                    <tr>
+                        <td>Business Supplies</td>
+                        <td>$287</td>
+                        <td class="amount">$24</td>
+                        <td class="notes">As needed</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Semi-Annual & Annual</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Annual Cost</th>
+                        <th>Save Monthly</th>
+                        <th>Payment Schedule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Property Taxes</strong></td>
+                        <td>$8,487</td>
+                        <td class="amount"><strong>$707</strong></td>
+                        <td class="notes">Feb ($4,245) & Jul ($4,243)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Home Insurance</strong></td>
+                        <td>$3,000</td>
+                        <td class="amount"><strong>$250</strong></td>
+                        <td class="notes">Aug/Sep</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Auto Maintenance</strong></td>
+                        <td>$4,340</td>
+                        <td class="amount"><strong>$362</strong></td>
+                        <td class="notes">As needed (5x this year)</td>
+                    </tr>
+                    <tr>
+                        <td>Medical/Vision</td>
+                        <td>$773</td>
+                        <td class="amount">$65</td>
+                        <td class="notes">As needed</td>
+                    </tr>
+                    <tr>
+                        <td>Other Periodic</td>
+                        <td>$942</td>
+                        <td class="amount">$79</td>
+                        <td class="notes">Various small items</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Periodic Savings</strong></td>
+                        <td></td>
+                        <td class="amount"><strong>$1,760</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="opportunity">
+                <h3>💡 Optimization Opportunities</h3>
+                <ul>
+                    <li><strong>Shopping ($1,440/month)</strong> - Your largest discretionary category with room for reduction</li>
+                    <li><strong>Food Total ($2,175/month)</strong> - Groceries + Restaurants combined</li>
+                    <li><strong>Education ($450/month)</strong> - Review if all expenses are necessary</li>
+                </ul>
+            </div>
+            
+            <div class="action-items">
+                <h3>✅ Action Items</h3>
+                <h4>Immediate Setup:</h4>
+                <ul class="checklist">
+                    <li>Create Property Tax sinking fund: $707/month</li>
+                    <li>Create Auto Maintenance fund: $362/month</li>
+                    <li>Create Home Insurance fund: $250/month</li>
+                    <li>Set up Utilities fund: $44/month (Water + Garbage)</li>
+                    <li>Establish Medical/Vision fund: $65/month</li>
+                </ul>
+                
+                <h4>Monthly Review:</h4>
+                <ul class="checklist">
+                    <li>Transfer sinking fund amounts to separate savings</li>
+                    <li>Review shopping expenses against $1,440 budget</li>
+                    <li>Check upcoming quarterly bills</li>
+                    <li>Monitor auto maintenance needs</li>
+                    <li>Verify insurance payments are on schedule</li>
+                </ul>
+            </div>
+            
+            <h2>Annual Planning Calendar</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Major Payment Due</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>February</strong></td>
+                        <td>Property Tax Payment</td>
+                        <td class="amount">~$4,245</td>
+                    </tr>
+                    <tr>
+                        <td><strong>April</strong></td>
+                        <td>Tax Prep/Accountant</td>
+                        <td class="amount">~$430</td>
+                    </tr>
+                    <tr>
+                        <td><strong>June</strong></td>
+                        <td>Vision Expenses</td>
+                        <td class="amount">~$330</td>
+                    </tr>
+                    <tr>
+                        <td><strong>July</strong></td>
+                        <td>Property Tax Payment</td>
+                        <td class="amount">~$4,243</td>
+                    </tr>
+                    <tr>
+                        <td><strong>August/September</strong></td>
+                        <td>Home Insurance</td>
+                        <td class="amount">~$3,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quarterly</strong></td>
+                        <td>Water, Garbage, Activities</td>
+                        <td class="amount">Varies</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Total household budget of $8,835/month</strong> provides stability for regular expenses while building reserves for all periodic costs.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">This budget excludes debt payments, transfers, and travel expenses as requested.</p>
+        </div>
+    </div>
+</body>
+</html>
